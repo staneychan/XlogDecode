@@ -1,0 +1,13 @@
+^^^^^^^^^^Mar 13 2018^^^11:52:29^^^^^^^^^^[14735,14735][2018-03-13 +0800 17:12:23]
+del time out files time: 2
+get mmap time: 0
+MARS_URL: 
+MARS_PATH: 
+MARS_REVISION: 
+MARS_BUILD_TIME: 2018-03-13 11:50:31
+MARS_BUILD_JOB: mars_xlog_sdk/mars_libs
+log appender mode:0, use mmap:1
+[D][2018-03-13 +8.0 17:12:23.203][14735, 1*][dream][, , 0][========test中国家医药管理局 今天发布重要消息：!@#%^&
+[D][2018-03-13 +8.0 17:12:23.205][14735, 1*][dream][, , 0][_20180313_171223
+[D][2018-03-13 +8.0 17:12:23.206][14735, 1*][dream][, , 0][locker version:aa 00 03 00 d1 00 d1 55 
+[D][2018-03-13 +8.0 17:12:23.206][14735, 1*][dream][, , 0][locker unlock:aa 00 03 00 d2 00 d2 55 
