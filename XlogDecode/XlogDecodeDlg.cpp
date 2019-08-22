@@ -1,5 +1,5 @@
 
-// XlogDecodeDlg.cpp : 实现文件
+// XlogDecodeDlg.cpp : ʵ���ļ�
 //
 
 #include "stdafx.h"
@@ -13,20 +13,20 @@
 #endif
 
 
-// 用于应用程序“关于”菜单项的 CAboutDlg 对话框
+// ����Ӧ�ó��򡰹��ڡ��˵���� CAboutDlg �Ի���
 
 class CAboutDlg : public CDialog
 {
 public:
 	CAboutDlg();
 
-// 对话框数据
+// �Ի�������
 	enum { IDD = IDD_ABOUTBOX };
 
 	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV ֧��
 
-// 实现
+// ʵ��
 protected:
 	DECLARE_MESSAGE_MAP()
 };
@@ -44,7 +44,7 @@ BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
 END_MESSAGE_MAP()
 
 
-// CXlogDecodeDlg 对话框
+// CXlogDecodeDlg �Ի���
 
 
 
@@ -72,15 +72,15 @@ BEGIN_MESSAGE_MAP(CXlogDecodeDlg, CDialog)
 END_MESSAGE_MAP()
 
 
-// CXlogDecodeDlg 消息处理程序
+// CXlogDecodeDlg ��Ϣ��������
 
 BOOL CXlogDecodeDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
-	// 将“关于...”菜单项添加到系统菜单中。
+	// ��������...���˵������ӵ�ϵͳ�˵��С�
 
-	// IDM_ABOUTBOX 必须在系统命令范围内。
+	// IDM_ABOUTBOX ������ϵͳ���Χ�ڡ�
 	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
 	ASSERT(IDM_ABOUTBOX < 0xF000);
 
@@ -98,19 +98,19 @@ BOOL CXlogDecodeDlg::OnInitDialog()
 		}
 	}
 
-	// 设置此对话框的图标。当应用程序主窗口不是对话框时，框架将自动
-	//  执行此操作
-	SetIcon(m_hIcon, TRUE);			// 设置大图标
-	SetIcon(m_hIcon, FALSE);		// 设置小图标
+	// ���ô˶Ի����ͼ�ꡣ��Ӧ�ó��������ڲ��ǶԻ���ʱ����ܽ��Զ�
+	//  ִ�д˲���
+	SetIcon(m_hIcon, TRUE);			// ���ô�ͼ��
+	SetIcon(m_hIcon, FALSE);		// ����Сͼ��
 	m_chk_skip_error_block.SetCheck(TRUE);
 
-	// TODO: 在此添加额外的初始化代码
+	// TODO: �ڴ����Ӷ���ĳ�ʼ������
 
-	//Xlog参考：http://blog.csdn.net/linuxfu/article/details/61915473
-	//zlib参考：http://zlib.net/zlib_how.html
+	//Xlog�ο���http://blog.csdn.net/linuxfu/article/details/61915473
+	//zlib�ο���http://zlib.net/zlib_how.html
 	
 
-	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
+	return TRUE;  // ���ǽ��������õ��ؼ������򷵻� TRUE
 }
 
 void CXlogDecodeDlg::OnSysCommand(UINT nID, LPARAM lParam)
@@ -126,19 +126,19 @@ void CXlogDecodeDlg::OnSysCommand(UINT nID, LPARAM lParam)
 	}
 }
 
-// 如果向对话框添加最小化按钮，则需要下面的代码
-//  来绘制该图标。对于使用文档/视图模型的 MFC 应用程序，
-//  这将由框架自动完成。
+// �����Ի���������С����ť������Ҫ����Ĵ���
+//  �����Ƹ�ͼ�ꡣ����ʹ���ĵ�/��ͼģ�͵� MFC Ӧ�ó���
+//  �⽫�ɿ���Զ���ɡ�
 
 void CXlogDecodeDlg::OnPaint()
 {
 	if (IsIconic())
 	{
-		CPaintDC dc(this); // 用于绘制的设备上下文
+		CPaintDC dc(this); // ���ڻ��Ƶ��豸������
 
 		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
 
-		// 使图标在工作区矩形中居中
+		// ʹͼ���ڹ����������о���
 		int cxIcon = GetSystemMetrics(SM_CXICON);
 		int cyIcon = GetSystemMetrics(SM_CYICON);
 		CRect rect;
@@ -146,7 +146,7 @@ void CXlogDecodeDlg::OnPaint()
 		int x = (rect.Width() - cxIcon + 1) / 2;
 		int y = (rect.Height() - cyIcon + 1) / 2;
 
-		// 绘制图标
+		// ����ͼ��
 		dc.DrawIcon(x, y, m_hIcon);
 	}
 	else
@@ -155,8 +155,8 @@ void CXlogDecodeDlg::OnPaint()
 	}
 }
 
-//当用户拖动最小化窗口时系统调用此函数取得光标
-//显示。
+//���û��϶���С������ʱϵͳ���ô˺���ȡ�ù��
+//��ʾ��
 HCURSOR CXlogDecodeDlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
@@ -168,18 +168,18 @@ HCURSOR CXlogDecodeDlg::OnQueryDragIcon()
 
 void CXlogDecodeDlg::OnDropFiles(HDROP hDropInfo)
 {
-	//清空所有
+	//�������
 	m_listFile.RemoveAll();
 
-	int DropCount = DragQueryFile(hDropInfo,-1,NULL,0);//取得被拖动文件的数目  
+	int DropCount = DragQueryFile(hDropInfo,-1,NULL,0);//ȡ�ñ��϶��ļ�����Ŀ  
     for(int i=0;i< DropCount;i++)  
     {  
         WCHAR wcStr[MAX_PATH];  
-        DragQueryFile(hDropInfo,i,wcStr,MAX_PATH);//获得拖曳的第i个文件的文件名  
+        DragQueryFile(hDropInfo,i,wcStr,MAX_PATH);//�����ҷ�ĵ�i���ļ����ļ���  
         m_listFile.Add(wcStr);  
 		OutputDebugString(wcStr);
     }   
-    DragFinish(hDropInfo);  //拖放结束后,释放内存
+    DragFinish(hDropInfo);  //�ϷŽ�����,�ͷ��ڴ�
 
 	SetDlgItemText(IDC_EDIT_PATH, m_listFile.GetAt(0));
 
@@ -274,7 +274,7 @@ void CXlogDecodeDlg::decodeFile(CString srcFilePath, CString savePath){
 		//header
 		reader.Read(header, GetHeaderLen());
 		readPos += GetHeaderLen();
-		//打印header
+		//��ӡheader
 	//	CString szHead = dump(header, GetHeaderLen());
 	//	OutputDebugString(szHead + L"\r\n");
 
@@ -435,6 +435,6 @@ void CXlogDecodeDlg::OnBnClickedBtnDecode()
 			}
 		}
 	}
-	MessageBox(L"完成");
+	MessageBox(L"���");
 }
 

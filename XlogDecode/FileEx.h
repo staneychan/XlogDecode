@@ -50,6 +50,7 @@ public:
 	void SeekToEnd();
 	void SeekToBegin();
 	int  Seek(LONG lOff, int nFrom);
+	void SeekOffset(LONG lOffset);
 
 	FILE* GetFileHandle(){ return m_pFileStream; }
 protected:

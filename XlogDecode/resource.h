@@ -9,8 +9,9 @@
 #define IDR_MAINFRAME                   128
 #define IDC_BTN_DECODE                  1000
 #define IDC_CHECK_RECURSE               1001
-#define IDC_EDIT1                       1002
 #define IDC_EDIT_PATH                   1002
+#define IDC_CHECK_RECURSE2              1003
+#define IDC_CHECK_SKIP_ERROR_BLOCK      1003
 
 // Next default values for new objects
 // 

@@ -122,3 +122,10 @@ int CFileEx::Seek(LONG lOff, int nFrom)
 	}
 	return -1;
 }
+
+void CFileEx::SeekOffset(LONG lOffset)
+{
+	if(m_pFileStream){
+		fseek(m_pFileStream, lOffset, SEEK_CUR);
+	}
+}
