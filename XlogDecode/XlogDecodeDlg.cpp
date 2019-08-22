@@ -1,5 +1,5 @@
 
-// XlogDecodeDlg.cpp : ÊµÏÖÎÄ¼ş
+// XlogDecodeDlg.cpp : å®ç°æ–‡ä»¶
 //
 
 #include "stdafx.h"
@@ -8,27 +8,25 @@
 
 #include "BytesUtils.h"
 #include "xlogdef.h"
-#include "zlib\zlib.h"
-
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
 
-// ÓÃÓÚÓ¦ÓÃ³ÌĞò¡°¹ØÓÚ¡±²Ëµ¥ÏîµÄ CAboutDlg ¶Ô»°¿ò
+// ç”¨äºåº”ç”¨ç¨‹åºâ€œå…³äºâ€èœå•é¡¹çš„ CAboutDlg å¯¹è¯æ¡†
 
 class CAboutDlg : public CDialog
 {
 public:
 	CAboutDlg();
 
-// ¶Ô»°¿òÊı¾İ
+// å¯¹è¯æ¡†æ•°æ®
 	enum { IDD = IDD_ABOUTBOX };
 
 	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV Ö§³Ö
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV æ”¯æŒ
 
-// ÊµÏÖ
+// å®ç°
 protected:
 	DECLARE_MESSAGE_MAP()
 };
@@ -46,7 +44,7 @@ BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
 END_MESSAGE_MAP()
 
 
-// CXlogDecodeDlg ¶Ô»°¿ò
+// CXlogDecodeDlg å¯¹è¯æ¡†
 
 
 
@@ -61,6 +59,7 @@ void CXlogDecodeDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_CHECK_RECURSE, m_chk_recurse);
+	DDX_Control(pDX, IDC_CHECK_SKIP_ERROR_BLOCK, m_chk_skip_error_block);
 }
 
 BEGIN_MESSAGE_MAP(CXlogDecodeDlg, CDialog)
@@ -73,15 +72,15 @@ BEGIN_MESSAGE_MAP(CXlogDecodeDlg, CDialog)
 END_MESSAGE_MAP()
 
 
-// CXlogDecodeDlg ÏûÏ¢´¦Àí³ÌĞò
+// CXlogDecodeDlg æ¶ˆæ¯å¤„ç†ç¨‹åº
 
 BOOL CXlogDecodeDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
-	// ½«¡°¹ØÓÚ...¡±²Ëµ¥ÏîÌí¼Óµ½ÏµÍ³²Ëµ¥ÖĞ¡£
+	// å°†â€œå…³äº...â€èœå•é¡¹æ·»åŠ åˆ°ç³»ç»Ÿèœå•ä¸­ã€‚
 
-	// IDM_ABOUTBOX ±ØĞëÔÚÏµÍ³ÃüÁî·¶Î§ÄÚ¡£
+	// IDM_ABOUTBOX å¿…é¡»åœ¨ç³»ç»Ÿå‘½ä»¤èŒƒå›´å†…ã€‚
 	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
 	ASSERT(IDM_ABOUTBOX < 0xF000);
 
@@ -99,18 +98,19 @@ BOOL CXlogDecodeDlg::OnInitDialog()
 		}
 	}
 
-	// ÉèÖÃ´Ë¶Ô»°¿òµÄÍ¼±ê¡£µ±Ó¦ÓÃ³ÌĞòÖ÷´°¿Ú²»ÊÇ¶Ô»°¿òÊ±£¬¿ò¼Ü½«×Ô¶¯
-	//  Ö´ĞĞ´Ë²Ù×÷
-	SetIcon(m_hIcon, TRUE);			// ÉèÖÃ´óÍ¼±ê
-	SetIcon(m_hIcon, FALSE);		// ÉèÖÃĞ¡Í¼±ê
+	// è®¾ç½®æ­¤å¯¹è¯æ¡†çš„å›¾æ ‡ã€‚å½“åº”ç”¨ç¨‹åºä¸»çª—å£ä¸æ˜¯å¯¹è¯æ¡†æ—¶ï¼Œæ¡†æ¶å°†è‡ªåŠ¨
+	//  æ‰§è¡Œæ­¤æ“ä½œ
+	SetIcon(m_hIcon, TRUE);			// è®¾ç½®å¤§å›¾æ ‡
+	SetIcon(m_hIcon, FALSE);		// è®¾ç½®å°å›¾æ ‡
+	m_chk_skip_error_block.SetCheck(TRUE);
 
-	// TODO: ÔÚ´ËÌí¼Ó¶îÍâµÄ³õÊ¼»¯´úÂë
+	// TODO: åœ¨æ­¤æ·»åŠ é¢å¤–çš„åˆå§‹åŒ–ä»£ç 
 
-	//Xlog²Î¿¼£ºhttp://blog.csdn.net/linuxfu/article/details/61915473
-	//zlib²Î¿¼£ºhttp://zlib.net/zlib_how.html
+	//Xlogå‚è€ƒï¼šhttp://blog.csdn.net/linuxfu/article/details/61915473
+	//zlibå‚è€ƒï¼šhttp://zlib.net/zlib_how.html
 	
 
-	return TRUE;  // ³ı·Ç½«½¹µãÉèÖÃµ½¿Ø¼ş£¬·ñÔò·µ»Ø TRUE
+	return TRUE;  // é™¤éå°†ç„¦ç‚¹è®¾ç½®åˆ°æ§ä»¶ï¼Œå¦åˆ™è¿”å› TRUE
 }
 
 void CXlogDecodeDlg::OnSysCommand(UINT nID, LPARAM lParam)
@@ -126,19 +126,19 @@ void CXlogDecodeDlg::OnSysCommand(UINT nID, LPARAM lParam)
 	}
 }
 
-// Èç¹ûÏò¶Ô»°¿òÌí¼Ó×îĞ¡»¯°´Å¥£¬ÔòĞèÒªÏÂÃæµÄ´úÂë
-//  À´»æÖÆ¸ÃÍ¼±ê¡£¶ÔÓÚÊ¹ÓÃÎÄµµ/ÊÓÍ¼Ä£ĞÍµÄ MFC Ó¦ÓÃ³ÌĞò£¬
-//  Õâ½«ÓÉ¿ò¼Ü×Ô¶¯Íê³É¡£
+// å¦‚æœå‘å¯¹è¯æ¡†æ·»åŠ æœ€å°åŒ–æŒ‰é’®ï¼Œåˆ™éœ€è¦ä¸‹é¢çš„ä»£ç 
+//  æ¥ç»˜åˆ¶è¯¥å›¾æ ‡ã€‚å¯¹äºä½¿ç”¨æ–‡æ¡£/è§†å›¾æ¨¡å‹çš„ MFC åº”ç”¨ç¨‹åºï¼Œ
+//  è¿™å°†ç”±æ¡†æ¶è‡ªåŠ¨å®Œæˆã€‚
 
 void CXlogDecodeDlg::OnPaint()
 {
 	if (IsIconic())
 	{
-		CPaintDC dc(this); // ÓÃÓÚ»æÖÆµÄÉè±¸ÉÏÏÂÎÄ
+		CPaintDC dc(this); // ç”¨äºç»˜åˆ¶çš„è®¾å¤‡ä¸Šä¸‹æ–‡
 
 		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
 
-		// Ê¹Í¼±êÔÚ¹¤×÷Çø¾ØĞÎÖĞ¾ÓÖĞ
+		// ä½¿å›¾æ ‡åœ¨å·¥ä½œåŒºçŸ©å½¢ä¸­å±…ä¸­
 		int cxIcon = GetSystemMetrics(SM_CXICON);
 		int cyIcon = GetSystemMetrics(SM_CYICON);
 		CRect rect;
@@ -146,7 +146,7 @@ void CXlogDecodeDlg::OnPaint()
 		int x = (rect.Width() - cxIcon + 1) / 2;
 		int y = (rect.Height() - cyIcon + 1) / 2;
 
-		// »æÖÆÍ¼±ê
+		// ç»˜åˆ¶å›¾æ ‡
 		dc.DrawIcon(x, y, m_hIcon);
 	}
 	else
@@ -155,8 +155,8 @@ void CXlogDecodeDlg::OnPaint()
 	}
 }
 
-//µ±ÓÃ»§ÍÏ¶¯×îĞ¡»¯´°¿ÚÊ±ÏµÍ³µ÷ÓÃ´Ëº¯ÊıÈ¡µÃ¹â±ê
-//ÏÔÊ¾¡£
+//å½“ç”¨æˆ·æ‹–åŠ¨æœ€å°åŒ–çª—å£æ—¶ç³»ç»Ÿè°ƒç”¨æ­¤å‡½æ•°å–å¾—å…‰æ ‡
+//æ˜¾ç¤ºã€‚
 HCURSOR CXlogDecodeDlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
@@ -168,18 +168,18 @@ HCURSOR CXlogDecodeDlg::OnQueryDragIcon()
 
 void CXlogDecodeDlg::OnDropFiles(HDROP hDropInfo)
 {
-	//Çå¿ÕËùÓĞ
+	//æ¸…ç©ºæ‰€æœ‰
 	m_listFile.RemoveAll();
 
-	int DropCount = DragQueryFile(hDropInfo,-1,NULL,0);//È¡µÃ±»ÍÏ¶¯ÎÄ¼şµÄÊıÄ¿  
+	int DropCount = DragQueryFile(hDropInfo,-1,NULL,0);//å–å¾—è¢«æ‹–åŠ¨æ–‡ä»¶çš„æ•°ç›®  
     for(int i=0;i< DropCount;i++)  
     {  
         WCHAR wcStr[MAX_PATH];  
-        DragQueryFile(hDropInfo,i,wcStr,MAX_PATH);//»ñµÃÍÏÒ·µÄµÚi¸öÎÄ¼şµÄÎÄ¼şÃû  
+        DragQueryFile(hDropInfo,i,wcStr,MAX_PATH);//è·å¾—æ‹–æ›³çš„ç¬¬iä¸ªæ–‡ä»¶çš„æ–‡ä»¶å  
         m_listFile.Add(wcStr);  
 		OutputDebugString(wcStr);
     }   
-    DragFinish(hDropInfo);  //ÍÏ·Å½áÊøºó,ÊÍ·ÅÄÚ´æ
+    DragFinish(hDropInfo);  //æ‹–æ”¾ç»“æŸå,é‡Šæ”¾å†…å­˜
 
 	SetDlgItemText(IDC_EDIT_PATH, m_listFile.GetAt(0));
 
@@ -197,7 +197,7 @@ int CXlogDecodeDlg::decode(){
 	OutputDebugString(szHead + L"\r\n");
 	xlogHead sHead;
 	memcpy(&sHead , header, sizeof(xlogHead));
-	TRACE("GET BODY length:%d start=>%d:%d\r\n", sHead.length, sHead.beginHour, sHead.endHour);
+	TRACE("DEBUG_GET BODY length:%d start=>%d:%d\r\n", sHead.length, sHead.beginHour, sHead.endHour);
 
 	//body
 	byte *out = new byte[sHead.length];
@@ -231,6 +231,28 @@ int CXlogDecodeDlg::decode(){
 	return 1;
 }
 
+int skipToNextBlock(CFileEx &reader, xlogHead &sHead){
+	int skipCount = 0;
+	byte endFlag,startFlag;
+	byte *header = new byte[GetHeaderLen()];
+
+	do{
+		reader.Read(&endFlag, 1);
+		skipCount++;
+		if(endFlag == 0x00){
+			reader.Read(&startFlag, 1);
+			skipCount++;
+			if(startFlag == 0x09){//kMagicAsyncNoCryptStart
+				reader.SeekOffset(-1);
+				reader.Read(header, GetHeaderLen());
+				memcpy(&sHead , header, sizeof(xlogHead));
+			}
+		}
+	}while(sHead.length > 65535);
+	delete header;
+	return skipCount;
+}
+
 void CXlogDecodeDlg::decodeFile(CString srcFilePath, CString savePath){
 	CFileEx writer;
 	CFileEx reader;
@@ -251,15 +273,20 @@ void CXlogDecodeDlg::decodeFile(CString srcFilePath, CString savePath){
 	while(readPos < fileLength){
 		//header
 		reader.Read(header, GetHeaderLen());
-		//´òÓ¡header
+		readPos += GetHeaderLen();
+		//æ‰“å°header
 	//	CString szHead = dump(header, GetHeaderLen());
 	//	OutputDebugString(szHead + L"\r\n");
 
 		xlogHead sHead;
 		memcpy(&sHead , header, sizeof(xlogHead));
+		TRACE("GET BODY start FLAG:%02x ->seq:%d\r\n", sHead.start, sHead.seq);
+
 		TRACE("GET BODY length:%d start=>%d:%d\r\n", sHead.length, sHead.beginHour, sHead.endHour);
 
-		readPos += GetHeaderLen() + sHead.length + 1;
+		if(m_bSkipErrorBlock && sHead.length > 65535){
+			readPos += skipToNextBlock(reader, sHead);
+		}
 		//body
 		byte *body = new byte[sHead.length];
 		reader.Read(body, sHead.length);
@@ -270,6 +297,8 @@ void CXlogDecodeDlg::decodeFile(CString srcFilePath, CString savePath){
 		
 		//END tag
 		reader.Read(body, 1);
+
+		readPos += sHead.length + 1;
 		delete []body;
 	}
 	writer.Close();
@@ -388,6 +417,7 @@ int unzip(unsigned char * pDest, unsigned long * ulDestLen, unsigned char *  pSo
 #endif
 void CXlogDecodeDlg::OnBnClickedBtnDecode()
 {
+	m_bSkipErrorBlock = m_chk_skip_error_block.GetCheck();
 //	decode();
 
 	XlogFileScan scaner;
@@ -405,6 +435,6 @@ void CXlogDecodeDlg::OnBnClickedBtnDecode()
 			}
 		}
 	}
-	MessageBox(L"Íê³É");
+	MessageBox(L"å®Œæˆ");
 }
 
