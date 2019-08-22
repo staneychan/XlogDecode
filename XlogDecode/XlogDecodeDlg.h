@@ -1,5 +1,5 @@
 
-// XlogDecodeDlg.h : Í·ÎÄ¼ş
+// XlogDecodeDlg.h : å¤´æ–‡ä»¶
 //
 
 #pragma once
@@ -10,26 +10,25 @@
 #include "afxwin.h"
 #include "xlogfilescan.h"
 
-
-// CXlogDecodeDlg ¶Ô»°¿ò
+// CXlogDecodeDlg å¯¹è¯æ¡†
 class CXlogDecodeDlg : public CDialog
 {
-// ¹¹Ôì
+// æ„é€ 
 public:
-	CXlogDecodeDlg(CWnd* pParent = NULL);	// ±ê×¼¹¹Ôìº¯Êı
+	CXlogDecodeDlg(CWnd* pParent = NULL);	// æ ‡å‡†æ„é€ å‡½æ•°
 
-// ¶Ô»°¿òÊı¾İ
+// å¯¹è¯æ¡†æ•°æ®
 	enum { IDD = IDD_XLOGDECODE_DIALOG };
 
 	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV Ö§³Ö
+	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV æ”¯æŒ
 
 
-// ÊµÏÖ
+// å®ç°
 protected:
 	HICON m_hIcon;
 
-	// Éú³ÉµÄÏûÏ¢Ó³Éäº¯Êı
+	// ç”Ÿæˆçš„æ¶ˆæ¯æ˜ å°„å‡½æ•°
 	virtual BOOL OnInitDialog();
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
 	afx_msg void OnPaint();
@@ -45,4 +44,6 @@ public:
 
 	CButton m_chk_recurse;
 	CStringArray m_listFile;
+	CButton m_chk_skip_error_block;
+	BOOL m_bSkipErrorBlock;
 };
